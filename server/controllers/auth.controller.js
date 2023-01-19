@@ -3,7 +3,6 @@ const { userService, passwordService } = require("../service");
 module.exports = {
     registerUser: async (req, res, next) => {
         try {
-
             const { password } = req.body;
 
             const hashPasword = await passwordService.hashPassword(password);

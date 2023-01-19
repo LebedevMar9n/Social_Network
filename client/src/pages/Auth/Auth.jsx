@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Auth.css';
 import Logo from "../../img/logo.png";
@@ -7,13 +7,11 @@ import { logIn, signUp } from '../../actions/AuthAction';
 
 
 function Auth() {
-
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.authReducer.loading);
   const [isSignUp, setIsSignUp] = useState(true);
   const [data, setData] = useState({ firstname: '', lastname: '', email: '', password: '', confirmpassword: '' });
   const [confirmPassword, setConfirmPassword] = useState(true);
-
-  const dispatch = useDispatch();
-
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -21,10 +19,12 @@ function Auth() {
     e.preventDefault();
     if (isSignUp) {
       data.password === data.confirmpassword
-        ? dispatch(signUp(data))
-        : setConfirmPassword(false);
+      ? dispatch(signUp(data))
+      : setConfirmPassword(false);
     } else {
-      dispatch(logIn(data));
+      // the same data.value as joi.validator on server
+      const {email,password}=data
+      dispatch(logIn({email,password}));
     }
   };
   const resetForm = () => {
@@ -102,7 +102,9 @@ function Auth() {
             </span>
           </div>
 
-          <button className='button infoButton' type='submit'>{isSignUp ? "Sign Up" : "Log In"}</button>
+          <button className='button infoButton' type='submit' disabled={loading}>
+            {loading ? "Loading..." : isSignUp ? "Sign Up" : "Log In"}
+          </button>
         </form>
       </div>
     </div >
