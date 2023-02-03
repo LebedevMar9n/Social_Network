@@ -1,6 +1,6 @@
 
 module.exports = {
-    // ACCES_TOKEN_SECRET: process.env.ACCES_TOKEN_SECRET || 'asd',
+    ACCES_TOKEN_SECRET: process.env.ACCES_TOKEN_SECRET || 'asd',
     // REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET || 'qwe',
 
     PORT: process.env.PORT || 3001,

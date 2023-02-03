@@ -1,4 +1,4 @@
-// module.exports = {
-//     ACCESS: 'access',
-//     REFRESH: 'refresh',
-// };
+module.exports = {
+    ACCESS: 'access',
+    REFRESH: 'refresh',
+};

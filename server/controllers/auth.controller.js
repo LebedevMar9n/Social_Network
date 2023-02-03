@@ -1,4 +1,4 @@
-const { userService, passwordService } = require("../service");
+const { userService, passwordService, tokenService } = require("../service");
 
 module.exports = {
     registerUser: async (req, res, next) => {
@@ -9,7 +9,14 @@ module.exports = {
 
             const newUser = await userService.createOneUser({ ...req.body, password: hashPasword });
 
-            res.status(200).json(newUser);
+            const { access_token } = tokenService.generateAuthToken({
+                email: newUser.email, id: newUser._id
+            });
+
+            res.status(200).json({
+                user: newUser,
+                access_token
+            });
 
         } catch (e) {
             next(e);
@@ -17,12 +24,14 @@ module.exports = {
     },
     login: async (req, res, next) => {
         try {
-            const { password: hashPassword, _id } = req.user;
+            const { password: hashPassword, _id, email } = req.user;
             const { password } = req.body;
 
             await passwordService.comparePassword(hashPassword, password);
 
-            // const tokens = tokenService.generateAuthToken();
+            const { access_token } = tokenService.generateAuthToken({
+                email: email, id: _id
+            });
 
             // await Oauth.create({
             //     userId: _id,
@@ -31,7 +40,7 @@ module.exports = {
 
             res.json({
                 user: req.user,
-                // ...tokens,
+                access_token
             });
         } catch (e) {
             next(e);

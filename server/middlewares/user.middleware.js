@@ -30,8 +30,6 @@ module.exports = {
     },
     isUniqueEmail: async (req, res, next) => {
         try {
-            console.log(req.body);
-
             const { email } = req.body;
             const user = await userService.findOneUser({ email });
             if (user) {
