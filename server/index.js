@@ -2,9 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const expressFileUpload = require('express-fileupload');
+
 
 require('dotenv').config();
-const { authRouter, userRouter, postRouter } = require('./routes');
+const { authRouter, userRouter, postRouter, uploadRouter } = require('./routes');
 
 
 const { PORT, MONGO_URL } = require('./constants/config');
@@ -18,11 +20,13 @@ app.use(bodyParser.json({ limit: '30mb', extended: true }));
 // app.use(express.json());
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 // app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors());
+app.use(expressFileUpload());
 
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/post', postRouter);
+// app.use('/upload', uploadRouter);
 
 app.use('*', (req, res) => {
     res.status(404).json('page not found');

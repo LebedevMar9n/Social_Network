@@ -1,11 +1,20 @@
-const { postService, userService } = require("../service");
+const { postService, userService, s3Service } = require("../service");
 
 module.exports = {
     postPost: async (req, res, next) => {
         try {
-            const post = await postService.createOnePost(req.body);
+            const newPost = await postService.createOnePost(req.body);
 
-            res.status(200).json(post);
+            if (req.files) {
+                const { Location } = await s3Service.uploadFile(req.files.file, 'post', req.body.userId);
+
+                const postWithImgage = await postService.updateOnePost({ _id: newPost._id }, { image: Location });
+
+                res.status(200).json(postWithImgage);
+            }
+
+            res.status(200).json(newPost);
+
         } catch (e) {
             next(e);
         }

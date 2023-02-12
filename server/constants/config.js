@@ -17,10 +17,10 @@ module.exports = {
     // TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN || '',
     // TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER || '',
 
-    // AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME || '',
-    // AWS_S3_BUCKET_REGION: process.env.AWS_S3_BUCKET_REGION || '',
-    // AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY || '',
-    // AWS_S3_ACCESS_KEY_ID: process.env.AWS_S3_ACCESS_KEY_ID || '',
-    // AWS_S3_BUCKET_URL: process.env.AWS_S3_BUCKET_URL,
+    AWS_S3_BUCKET_NAME: process.env.AWS_S3_BUCKET_NAME || '',
+    AWS_S3_BUCKET_REGION: process.env.AWS_S3_BUCKET_REGION || '',
+    AWS_S3_SECRET_ACCESS_KEY: process.env.AWS_S3_SECRET_ACCESS_KEY || '',
+    AWS_S3_ACCESS_KEY_ID: process.env.AWS_S3_ACCESS_KEY_ID || '',
+    AWS_S3_BUCKET_URL: process.env.AWS_S3_BUCKET_URL,
 
 };
