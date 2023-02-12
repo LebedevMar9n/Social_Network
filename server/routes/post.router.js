@@ -1,11 +1,12 @@
 const postController = require('../controllers/post.controller');
-const { commonMiddleware, postMiddleware, userMiddleware } = require('../middlewares');
+const { commonMiddleware, postMiddleware, userMiddleware, fileMiddleware } = require('../middlewares');
 const { postValidator } = require('../validators');
 
 const router = require('express').Router();
 
 router.post('/',
     commonMiddleware.isDateValid(postValidator.newPostValidator),
+    fileMiddleware.checkImage,
     postController.postPost);
 router.get('/:id',
     commonMiddleware.isValidId,

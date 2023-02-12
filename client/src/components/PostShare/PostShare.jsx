@@ -37,7 +37,7 @@ function PostShare() {
             const data = new FormData();
             data.append('userId', newPost.userId);
             data.append('desc', newPost.desc);
-            data.append('file', image);
+            data.append('image', image);
 
             try {
                 dispatch(uploadPost(data));

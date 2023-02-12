@@ -6,7 +6,7 @@ module.exports = {
             const newPost = await postService.createOnePost(req.body);
 
             if (req.files) {
-                const { Location } = await s3Service.uploadFile(req.files.file, 'post', req.body.userId);
+                const { Location } = await s3Service.uploadFile(req.files.image, 'post', req.body.userId);
 
                 const postWithImgage = await postService.updateOnePost({ _id: newPost._id }, { image: Location });
 
