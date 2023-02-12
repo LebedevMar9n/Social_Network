@@ -1,4 +1,4 @@
-import { PostAPI, UploadAPI } from "../api";
+import { PostAPI } from "../api";
 import { actionEnum } from "../enums";
 
 // export const uploadImage = (data) => async (dispatch) => {

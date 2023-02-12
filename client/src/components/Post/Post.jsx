@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import './Post.css';
 import Comment from '../../img/comment.png';
@@ -7,9 +8,11 @@ import Heart from '../../img/like.png';
 import NotLike from '../../img/notlike.png';
 
 function Post({ data }) {
+    const { user } = useSelector((state) => state.authReducer.authData);
+
     return (
         <div className='Post'>
-            <img src={data.img} alt="" />
+            <img src={data.image} alt="" />
             <div className='postReact'>
                 <img src={data.liked ? Heart : NotLike} alt="" />
                 <img src={Comment} alt="" />
