@@ -3,7 +3,7 @@ import { UilScenery, UilPlayCircle, UilLocationPoint, UilSchedule, UilTimes } fr
 import { useDispatch, useSelector } from 'react-redux';
 
 import './PostShare.css';
-import ProfileImage from "../../img/profileImg.jpg";
+import Profile from "../../img/defaultProfile.png";
 import { uploadPost } from '../../actions/UploadActoin';
 
 function PostShare() {
@@ -22,6 +22,7 @@ function PostShare() {
             let img = event.target.files[0];
             setImage(img);
         }
+        event.target.value = ''; // for uploading the same image
     };
     const reset = () => {
         setImage(null);
@@ -52,7 +53,7 @@ function PostShare() {
 
     return (
         <div className='PostShare'>
-            <img src={ProfileImage} alt="" />
+            <img src={user.profilePicture ? user.profilePicture : Profile} alt="profilePicture"/>
             <div>
                 <input ref={desc} required type="text" placeholder='Whats happening' />
                 <div className='postOptions'>
@@ -79,15 +80,15 @@ function PostShare() {
                         {loading ? 'Uploading' : 'Share'}
                     </button>
                     <div style={{ display: 'none' }}>
-                        <input type="file" name='muImage' ref={imageRef} onChange={onImageChange} />
+                        <input type="file" name='myImage' ref={imageRef} onChange={onImageChange} />
                     </div>
                 </div>
 
                 {image &&
-                    <div className='previewImage'>
-                        <UilTimes onClick={() => setImage(null)} />
-                        <img src={URL.createObjectURL(image)} alt="" />
-                    </div>
+                    (<div className='previewImage'>
+                        <UilTimes onClick={(event) => { setImage(null); }} />
+                        <img src={URL.createObjectURL(image)} alt="preview" />
+                    </div>)
                 }
 
             </div>

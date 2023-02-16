@@ -9,16 +9,15 @@ function Posts() {
     const { user } = useSelector((state) => state.authReducer.authData);
     const { posts, uploading } = useSelector((state) => state.postReducer);
 
-        useEffect(() => {
+    useEffect(() => {
         dispatch(getTimeLinePosts(user._id));
     }, []);
 
     return (
         <div className='Posts'>
-            {uploading ? 'Fetching data...'
-                : posts.map((post, id) => {
-                    return <Post data={post} id={id} />;
-                })}
+            {posts.map((post, id) => {
+                return <Post data={post} id={id} />;
+            })}
         </div>
     );
 }
