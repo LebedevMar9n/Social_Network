@@ -12,6 +12,7 @@ export const logIn = (formData) => async (dispatch) => {
         dispatch({ type: actionEnum.AUTH_FAIL });
     }
 };
+
 export const signUp = (formData) => async (dispatch) => {
     dispatch({ type: actionEnum.AUTH_START });
     try {
@@ -23,3 +24,7 @@ export const signUp = (formData) => async (dispatch) => {
         dispatch({ type: actionEnum.AUTH_FAIL });
     }
 };
+
+export const logOut=()=>async(dispatch)=>{
+    dispatch({type:actionEnum.LOG_OUT})
+}

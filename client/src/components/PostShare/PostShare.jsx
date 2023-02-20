@@ -35,6 +35,7 @@ function PostShare() {
             desc: desc.current.value,
         };
         if (image) {
+            // sending req.files
             const data = new FormData();
             data.append('userId', newPost.userId);
             data.append('desc', newPost.desc);
@@ -53,7 +54,7 @@ function PostShare() {
 
     return (
         <div className='PostShare'>
-            <img src={user.profilePicture ? user.profilePicture : Profile} alt="profilePicture"/>
+            <img src={user.profilePicture ? user.profilePicture : Profile} alt="profilePicture" />
             <div>
                 <input ref={desc} required type="text" placeholder='Whats happening' />
                 <div className='postOptions'>
