@@ -36,6 +36,7 @@ const UserSchema = new Schema({
     about: String,
     livesin: String,
     worksAt: String,
+    country: String,
     relationship: String,
     followers: [],
     following: []

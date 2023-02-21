@@ -1,5 +1,6 @@
 const userController = require('../controllers/user.controller');
-const { commonMiddleware, userMiddleware } = require('../middlewares');
+const { imageTypeEnum } = require('../enums');
+const { commonMiddleware, userMiddleware, fileMiddleware } = require('../middlewares');
 const { userValidator } = require('../validators');
 
 const router = require('express').Router();
@@ -13,15 +14,17 @@ router.put('/:id',
     commonMiddleware.isValidId,
     commonMiddleware.isDateValid(userValidator.updateUserValidator),
     userMiddleware.isUserPresent,
+    fileMiddleware.checkImage(imageTypeEnum.PROFILEPICTURE),
+    fileMiddleware.checkImage(imageTypeEnum.COVERPICTURE),
     // authMiddleware.checkAccesToken,
-    // fileMiddleware.checkUserAvatar,
     userController.putUserById);
 
 router.delete('/:id',
     commonMiddleware.isValidId,
     userMiddleware.isUserPresent,
     // authMiddleware.checkAccesToken,
-    userController.deleteUserById);
+    userController.deleteUserById
+);
 
 router.put('/:id/follow',
     userMiddleware.isValidForFollowingOrUnfollow(true),

@@ -8,14 +8,17 @@ module.exports = {
         lastname: nameValidator.required(),
         email: emailValidator.required(),
         password: passwordValidator.required(),
-        confirmpassword:passwordValidator
+        confirmpassword: passwordValidator
     }),
 
     updateUserValidator: Joi.object({
         firstname: nameValidator,
         lastname: nameValidator,
-        email: emailValidator,
-        password: passwordValidator,
-        confirmpassword:passwordValidator
+        profilePicture: Joi.allow(),
+        coverPicture: Joi.allow(),
+        livesin: Joi.allow(),
+        worksAt: Joi.allow(),
+        country: Joi.allow(),
+        relationship: Joi.allow(),
     }),
 };

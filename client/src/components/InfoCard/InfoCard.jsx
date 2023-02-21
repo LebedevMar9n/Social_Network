@@ -42,7 +42,7 @@ const handleLogOut=()=>{
                 {user._id === profileUserId
                     ? (<div>
                         <UilPen width='2rem' height='1.2rem' onClick={() => setModalOpen(true)} />
-                        <ProfileModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+                        <ProfileModal modalOpen={modalOpen} setModalOpen={setModalOpen} data={user}/>
                     </div>)
                     : ("")}
 

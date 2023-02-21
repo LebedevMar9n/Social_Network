@@ -1,4 +1,4 @@
-const { passwordService, userService } = require("../service");
+const { passwordService, userService, s3Service } = require("../service");
 
 module.exports = {
     getUserById: async (req, res, next) => {
@@ -7,7 +7,7 @@ module.exports = {
 
             const { password, ...otherDetail } = user._doc;
 
-            res.json(otherDetail);
+            res.json({ user: otherDetail });
         } catch (e) {
             next(e);
         }
@@ -23,19 +23,28 @@ module.exports = {
                 if (password) {
                     req.body.password = await passwordService.hashPassword(password);
                 }
-                const updatedUser = await userService.updateOneUser({ _id: id }, req.body);
-                res.json(updatedUser);
+                if (req.files?.profilePicture) {
+                    if (req.user.profilePicture) {
+                        const { Location } = await s3Service.updateFile(req.files.profilePicture, req.user.profilePicture);
+                        req.body.profilePicture = Location;
+                    } else {
+                        const { Location } = await s3Service.uploadFile(req.files.profilePicture, 'profileImages', req.user._id);
+                        req.body.profilePicture = Location;
+                    }
+                }
+                if (req.files?.coverPicture) {
+                    if (req.user.coverPicture) {
+                        const { Location } = await s3Service.updateFile(req.files.coverPicture, req.user.coverPicture);
+                        req.body.coverPicture = Location;
+                    } else {
+                        const { Location } = await s3Service.uploadFile(req.files.coverPicture, 'profileImages', req.user._id);
+                        console.log(Location);
+                        req.body.coverPicture = Location;
+                    }
+                }
             }
-
-            // if (req.files?.avatar) {
-            //     if (req.user.avatar) {
-            //         const { Location } = await s3Service.uploadFile(req.files.avatar, 'user', id);
-            //         req.body.avatar = Location;
-            //     } else {
-            //         const { Location } = await s3Service.updateFile(req.files.avatar, req.user.avatar);
-            //         req.body.avatar = Location;
-            //     }
-            // }
+            const updatedUser = await userService.updateOneUser({ _id: id }, req.body);
+            res.json({ user: updatedUser });
         } catch (e) {
             next(e);
         }

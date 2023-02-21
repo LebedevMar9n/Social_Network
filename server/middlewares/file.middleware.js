@@ -2,13 +2,12 @@ const { IMAGE_MAX_SIZE, IMAGE_MIMETYPES } = require("../constants/regular.consta
 const { CustomError } = require("../error/CustomError");
 
 module.exports = {
-  checkImage: async (req, res, next) => {
+  checkImage:(file)=> async (req, res, next) => {
     try {
-      if (!req.files) {
+      if (!req.files[file]) {
         return next();
       }
-
-      const { mimetype, size } = req.files.image;
+      const { mimetype, size } = req.files[file];
 
       if (size > IMAGE_MAX_SIZE) {
         return next(new CustomError('Max size 3MB'));

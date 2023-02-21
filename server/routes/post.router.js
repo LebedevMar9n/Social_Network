@@ -1,4 +1,5 @@
 const postController = require('../controllers/post.controller');
+const { imageTypeEnum } = require('../enums');
 const { commonMiddleware, postMiddleware, userMiddleware, fileMiddleware } = require('../middlewares');
 const { postValidator } = require('../validators');
 
@@ -6,7 +7,7 @@ const router = require('express').Router();
 
 router.post('/',
     commonMiddleware.isDateValid(postValidator.newPostValidator),
-    fileMiddleware.checkImage,
+    fileMiddleware.checkImage(imageTypeEnum.IMAGE),
     postController.postPost);
 router.get('/:id',
     commonMiddleware.isValidId,
